@@ -8,17 +8,30 @@
 {% block body %}
 
     <h1>{{ category.name }}</h1>
-    <h3>Article</h3>
     <table class="table">
-    <th>Id</th>
-    <th>Name</th>
-    <th>Content</th>
-    {% for article in articles|slice(0,3)|reverse %}
-        <tr>
-            <td>{{ article.id }}</td>
-            <td>{{ article.title }}</td>
-            <td>{{ article.content }}</td>
-        </tr>
-    {% endfor %}
-        </table>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Content</th>
+        {% for article in category.articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.content }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{#        <h1>{{ category.name }}</h1>#}
+{#        <h3>Article</h3>#}
+{#        <table class="table">#}
+{#        <th>Id</th>#}
+{#        <th>Name</th>#}
+{#        <th>Content</th>#}
+{#        {% for article in articles|slice(0,3)|reverse %}#}
+{#            <tr>#}
+{#                <td>{{ article.id }}</td>#}
+{#                <td>{{ article.title }}</td>#}
+{#                <td>{{ article.content }}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#            </table>#}
 {% endblock %}
