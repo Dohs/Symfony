@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -79,18 +80,11 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/category/{categoryName}",name="show_category")
+     * @Route("/blog/category/{name}")
+     * @ParamConverter("category", class="App\Entity\Category")
      */
-    public function showByCategory(string $categoryName):Response
+    public function showByCategory(Category $category): Response
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneByName($categoryName);
-
-         $articles = $category->getArticles();
-//        foreach($articles as $article) {
-//            var_dump($article);
-//        }
 
         return $this->render(
             'blog/category.html.twig',
@@ -100,6 +94,29 @@ class BlogController extends AbstractController
         );
 
     }
+
+//    /**
+//     * @Route("/blog/category/{categoryName}",name="show_category")
+//     */
+//    public function showByCategory(string $categoryName):Response
+//    {
+//        $category = $this->getDoctrine()
+//            ->getRepository(Category::class)
+//            ->findOneByName($categoryName);
+//
+////         $articles = $category->getArticles();
+////        foreach($articles as $article) {
+////            var_dump($article);
+////        }
+//
+//        return $this->render(
+//            'blog/category.html.twig',
+//            [
+//                'category' => $category
+//            ]
+//        );
+//
+//    }
 //    public function showByCategory(string $categoryName):Response
 //    {
 //        $category = $this->getDoctrine()
