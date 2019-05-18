@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -15,45 +16,45 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
-    /**
-     * Getting a article with a formatted slug for title
-     *
-     * @param string $slug The slugger
-     *
-     * @Route("/blog/show/{slug<^[a-z0-9-]+$>}",
-     *     defaults={"slug" = null},
-     *     name="blog_show")
-     * @return Response A response instance
-     */
-    public function show(string $slug): Response
-    {
-        if (!$slug) {
-            throw $this->createNotFoundException('No slug has been sent to find an article in article\'s table.');
-        }
-
-        $slug = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
-        );
-
-        $article = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
-
-        if (!$article) {
-            throw $this->createNotFoundException(
-                'No article with ' . $slug . ' title, found in article\'s table.'
-            );
-        }
-
-        return $this->render(
-            'blog/show.html.twig',
-            [
-                'article' => $article,
-                'slug' => $slug,
-            ]
-        );
-    }
+//    /**
+//     * Getting a article with a formatted slug for title
+//     *
+//     * @param string $slug The slugger
+//     *
+//     * @Route("/blog/show/{slug<^[a-z0-9-]+$>}",
+//     *     defaults={"slug" = null},
+//     *     name="blog_show")
+//     * @return Response A response instance
+//     */
+//    public function show(string $slug): Response
+//    {
+//        if (!$slug) {
+//            throw $this->createNotFoundException('No slug has been sent to find an article in article\'s table.');
+//        }
+//
+//        $slug = preg_replace(
+//            '/-/',
+//            ' ', ucwords(trim(strip_tags($slug)), "-")
+//        );
+//
+//        $article = $this->getDoctrine()
+//            ->getRepository(Article::class)
+//            ->findOneBy(['title' => mb_strtolower($slug)]);
+//
+//        if (!$article) {
+//            throw $this->createNotFoundException(
+//                'No article with ' . $slug . ' title, found in article\'s table.'
+//            );
+//        }
+//
+//        return $this->render(
+//            'blog/show.html.twig',
+//            [
+//                'article' => $article,
+//                'slug' => $slug,
+//            ]
+//        );
+//    }
 
     /**
      * Show all row from article's entity
@@ -95,45 +96,33 @@ class BlogController extends AbstractController
 
     }
 
-//    /**
-//     * @Route("/blog/category/{categoryName}",name="show_category")
-//     */
-//    public function showByCategory(string $categoryName):Response
-//    {
-//        $category = $this->getDoctrine()
-//            ->getRepository(Category::class)
-//            ->findOneByName($categoryName);
-//
-////         $articles = $category->getArticles();
-////        foreach($articles as $article) {
-////            var_dump($article);
-////        }
-//
-//        return $this->render(
-//            'blog/category.html.twig',
-//            [
-//                'category' => $category
-//            ]
-//        );
-//
-//    }
-//    public function showByCategory(string $categoryName):Response
-//    {
-//        $category = $this->getDoctrine()
-//            ->getRepository(Category::class)
-//            ->findOneBy(['name' => $categoryName]);
-//
-//        $articles = $this->getDoctrine()
-//            ->getRepository(Article::class)
-//            ->findBy(['category' => $category]);
-//
-//        return $this->render(
-//            'blog/category.html.twig',
-//            [
-//                'articles' => $articles,
-//                'category' => $category
-//            ]
-//        );
-//
-//    }
+    /**
+     * @Route("/blog/tag/{name}", name="show_tag")
+     * @ParamConverter("tag", class="App\Entity\Tag")
+     */
+    public function showByTag(Tag $tag): Response
+    {
+        return $this->render(
+            'blog/showByTag.html.twig',
+            [
+                'tag' => $tag
+            ]
+        );
+    }
+
+    /**
+     * @Route("/blog/article/{article_id}", name="show_article")
+     * @ParamConverter("article", class="App\Entity\Article", options={"id"="article_id"})
+     */
+    public function showById(Article $article): Response
+    {
+        dump($article);
+        return $this->render(
+            'blog/show.html.twig',
+        [
+            'article' => $article
+        ]
+        );
+    }
+
 }

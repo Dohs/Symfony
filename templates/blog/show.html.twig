@@ -1,5 +1,14 @@
 {% extends'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ show}}</h1>
+    <h1>{{ article.title}}</h1>
+    {{ article.content }}<br>
+    <strong>Tags :</strong>
+    <ul>
+        {% for tag in article.tags %}
+            <li><a href="{{ path('show_tag', { 'name': tag.name} ) }}">{{ tag.name }}</a></li>
+        {% else %}
+            <li>No tags for this article</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
