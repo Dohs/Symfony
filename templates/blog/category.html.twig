@@ -6,6 +6,10 @@
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
+{#    {{ form_start(form) }}#}
+{#    {{ form_row(form.name) }}#}
+{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#    {{ form_end(form) }}#}
 
     <h1>{{ category.name }}</h1>
     <table class="table">
@@ -34,5 +38,4 @@
 {#            </tr>#}
 {#        {% endfor %}#}
 {#            </table>#}
-    {{ dump(category.articles) }}
 {% endblock %}

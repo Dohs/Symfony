@@ -5,6 +5,10 @@
 
 {% block body %}
     <h1>All articles from articles table : </h1>
+    {{ form_start(form) }}
+    {{ form_row(form.searchField) }}
+    <button type="submit" name="btnSearch">Rechercher</button>
+    {{ form_end(form) }}
     {% for article in articles %}
         <div>
             <h2><a href="{{ path('show_article', { 'article_id': article.id} ) }}">{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</a></h2>

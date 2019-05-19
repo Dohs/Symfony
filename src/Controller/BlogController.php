@@ -3,13 +3,16 @@
 
 namespace App\Controller;
 
-
+use App\Form\CategoryType;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Form\ArticleSearchType;
+use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,27 +76,60 @@ class BlogController extends AbstractController
                 'No article found in article\'s table.'
             );
         }
+        $form = $this->createForm(
+            ArticleSearchType::class,
+            null,
+            ['method' => Request::METHOD_GET]
+        );
 
         return $this->render(
             'blog/index.html.twig',
-            ['articles' => $articles]
+            ['articles' => $articles,
+                'form' => $form->createView(),
+            ]
         );
     }
 
     /**
-     * @Route("/blog/category/{name}")
+     * @Route("/blog/category/{name}", name="show_category")
      * @ParamConverter("category", class="App\Entity\Category")
      */
     public function showByCategory(Category $category): Response
     {
+//        $category = new Category();
+//        $form = $this->createForm(CategoryType::class,
+//            $category);
 
         return $this->render(
             'blog/category.html.twig',
             [
-                'category' => $category
+                'category' => $category,
+//                'form' => $form->createView(),
             ]
         );
 
+    }
+
+    /**
+     * @Route("/category",name="category_form")
+     */
+    public function addCategory(Request $request, ObjectManager $manager)
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category)
+            ->add('name');
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute('show_category', ['name' => $category->getName()]);
+        }
+        return $this->render(
+            'blog/categoryForm.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -119,9 +155,9 @@ class BlogController extends AbstractController
         dump($article);
         return $this->render(
             'blog/show.html.twig',
-        [
-            'article' => $article
-        ]
+            [
+                'article' => $article
+            ]
         );
     }
 
