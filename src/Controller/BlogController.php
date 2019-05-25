@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Entity\Tag;
 use App\Form\ArticleSearchType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -61,7 +62,7 @@ class BlogController extends AbstractController
 
     /**
      * Show all row from article's entity
-     *
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/blog", name="index")
      * @return Response A response instance
      */
