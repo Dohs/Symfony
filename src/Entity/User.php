@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username"}, message="Ce pseudo est déjà pris")
  */
 class User implements UserInterface
 {
@@ -33,12 +33,10 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     *  @Assert\EqualTo(propertyPath="confirm_password")
      */
     private $password;
     /**
-     * @var
-     * @Assert\EqualTo(propertyPath="password", message="Les mots de passe ne sont pas identiques!")
+     * @Assert\EqualTo(propertyPath="password")
      */
     private $confirm_password;
 
@@ -92,7 +90,7 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles=['ROLE_USER']): self
     {
         $this->roles = $roles;
 

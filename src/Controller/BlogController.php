@@ -62,7 +62,7 @@ class BlogController extends AbstractController
 
     /**
      * Show all row from article's entity
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER")
      * @Route("/blog", name="index")
      * @return Response A response instance
      */
@@ -113,6 +113,7 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/category",name="category_form")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function addCategory(Request $request, ObjectManager $manager)
     {

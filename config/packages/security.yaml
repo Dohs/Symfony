@@ -19,6 +19,7 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginAuthenticator
+
             logout:
                 path: logout
                 target: homepage
