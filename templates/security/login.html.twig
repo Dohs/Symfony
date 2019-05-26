@@ -5,6 +5,11 @@
 {% block body %}
     <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
     <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 <form  method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

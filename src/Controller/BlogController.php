@@ -62,7 +62,6 @@ class BlogController extends AbstractController
 
     /**
      * Show all row from article's entity
-     * @IsGranted("ROLE_USER")
      * @Route("/blog", name="index")
      * @return Response A response instance
      */

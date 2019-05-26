@@ -17,12 +17,14 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, ['label' => 'Pseudo'])
+            ->add('username', TextType::class, [
+                'label' => 'Pseudo',
+                ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe ne sont pas identique',
                 'options' => ['attr' => ['class' => 'mot de passe']],
-                'required' => true,
+                'required' =>true,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Répéter votre mot de passe'],
             ]);

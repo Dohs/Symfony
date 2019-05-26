@@ -9,12 +9,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('index') }}">Blog<span class="sr-only">(current)</span></a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
                 <a class="nav-link " href="{{ path('category_form') }}">add category</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('article_index') }}">CRUD</a>
             </li>
+            {% endif %}
             {% if is_granted('ROLE_USER') %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
