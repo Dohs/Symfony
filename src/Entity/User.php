@@ -40,23 +40,33 @@ class User implements UserInterface
      */
     private $password;
 
-//    private $confirm_password;
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getConfirmPassword()
-//    {
-//        return $this->confirm_password;
-//    }
-//
-//    /**
-//     * @param mixed $confirm_password
-//     */
-//    public function setConfirmPassword($confirm_password): void
-//    {
-//        $this->confirm_password = $confirm_password;
-//    }
+
+    /**
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @return string
+     */
+    public function getResetToken(): string
+    {
+        return $this->resetToken;
+    }
+
+    /**
+     * @param string $resetToken
+     */
+    public function setResetToken(?string $resetToken): void
+    {
+        $this->resetToken = $resetToken;
+    }
 
     public function getId(): ?int
     {
@@ -129,5 +139,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }

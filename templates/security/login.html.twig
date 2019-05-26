@@ -26,6 +26,8 @@
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
+    <div class="text-center"><a href="{{ path('app_forgotten_password') }}">ta oublié ton mot de passe petit poisson rouge ?<br>
+        allée clique je te change ca !</a></div>
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
