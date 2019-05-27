@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
@@ -11,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 /**
  * @Route("/article")
  * @IsGranted("ROLE_ADMIN")
@@ -47,8 +45,9 @@ class ArticleController extends AbstractController
                 'emails/add_article.html.twig',
                 array('article' => $article)
             );
+
             $message = (new \Swift_Message('Un nouvel article vient d\'être publié !'))
-                ->setFrom('Projetwilder@gmail.com')
+                ->setFrom($this->getParameter('mailer_from'))
                 ->setTo('Projetwilder@gmail.com')
                 ->setBody($content);
             $mailer->send($message);
