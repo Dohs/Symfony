@@ -5,9 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ * @UniqueEntity(fields={"title"}, message="Ce titre est déjà pris")
  */
 class Article
 {
@@ -20,6 +24,12 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     max= 255,
+     *     maxMessage="Le titre ne peux pas depasser {{ limit }} charactére"
+     * )
+     * @Assert\NotBlank(message="veuillez complétez ce champs")
+     * @Assert\NotEqualTo("digital", message=" il faut dire numérique")
      */
     private $title;
 
