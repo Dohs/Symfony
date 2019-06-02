@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
@@ -10,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /**
  * @Route("/article")
- * @IsGranted("ROLE_ADMIN")
  */
 class ArticleController extends AbstractController
 {
@@ -75,9 +76,15 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function edit(Request $request, Article $article, Slugify $slugify): Response
     {
+        $user = $this->getUser();
+        $author = $article->getAuthor();
+        if ($user != $author && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('hey ! ta pas le droit ! dsl..');
+        }
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 

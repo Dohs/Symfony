@@ -136,6 +136,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/tag/{name}", name="show_tag")
      * @ParamConverter("tag", class="App\Entity\Tag")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function showByTag(Tag $tag): Response
     {
