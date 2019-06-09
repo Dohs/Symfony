@@ -6,11 +6,12 @@ namespace App\service;
 
 class Slugify
 {
-public function  generate(string $input) : string
-{   $badLetter=['é','è','à','ç','ù',' ','\''];
-    $betterLetter=['e','e','a','c','u','-'];
-    $word=str_replace($badLetter,$betterLetter,$input);
-    $word = preg_replace('/[^A-Za-z0-9\-]/', '', $word);
-    return  rtrim($word,'-');
-}
+    public function generate(string $input) : string
+    {
+        setlocale(LC_ALL, 'fr_FR.UTF8');
+        $result = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $input);
+        $result= preg_replace('/[^A-Za-z0-9\-]/', '', $result);
+        $result= str_replace('-', ' ', $result);
+        return $result;
+    }
 }
