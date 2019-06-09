@@ -45,6 +45,7 @@ class ArticleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
+            $this->addFlash('success', 'The new article has been created');
 
             $content = $this->renderView(
                 'emails/add_article.html.twig',
@@ -94,6 +95,7 @@ class ArticleController extends AbstractController
             $slug = $slugify->generate($article->getTitle());
             $article->setSlug($slug);
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'The new article has been edit');
 
             return $this->redirectToRoute('article_index', [
                 'id' => $article->getId(),
@@ -115,6 +117,7 @@ class ArticleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();
+            $this->addFlash('danger', 'The new article has been deleted');
         }
 
         return $this->redirectToRoute('article_index');
