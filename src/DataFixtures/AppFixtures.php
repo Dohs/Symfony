@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 1000; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $category = new Category();
             $category->setName("category " . $i);
             $manager->persist($category);
