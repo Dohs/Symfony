@@ -17,11 +17,4 @@ class DefaultController extends AbstractController
     {
         return $this->render('Default/index.html.twig');
     }
-
-    /**
-     * @Route("/deconnexion", name="logout")
-     */
-    public function logout()
-    {
-    }
 }

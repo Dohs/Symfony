@@ -42,13 +42,6 @@ class User implements UserInterface
      */
     private $password;
 
-
-    /**
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $resetToken;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -68,22 +61,6 @@ class User implements UserInterface
     {
         $this->articles = new ArrayCollection();
         $this->favoris = new ArrayCollection();
-    }
-
-    /**
-     * @return string
-     */
-    public function getResetToken(): string
-    {
-        return $this->resetToken;
-    }
-
-    /**
-     * @param string $resetToken
-     */
-    public function setResetToken(?string $resetToken): void
-    {
-        $this->resetToken = $resetToken;
     }
 
     public function getId(): ?int

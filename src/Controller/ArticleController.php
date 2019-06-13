@@ -7,7 +7,7 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
-use App\service\Slugify;
+use App\Service\Slugify;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
